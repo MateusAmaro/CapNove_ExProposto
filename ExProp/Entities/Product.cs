@@ -4,8 +4,8 @@ namespace ExProp.Entities
 {
     class Product
     {
-        string Name { get; set; }
-        double Price { get; set; }
+        public string Name { get; set; }
+        public double Price { get; set; }
 
         public Product()
         {

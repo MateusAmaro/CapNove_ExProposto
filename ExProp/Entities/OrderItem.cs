@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Globalization;
 
 namespace ExProp.Entities
 {
@@ -7,21 +6,33 @@ namespace ExProp.Entities
     {
         int Quantity { get; set; }
         double Price { get; set; }
-        public List<Product> Products { get; set; } = new List<Product>();
+        public Product Product { get; set; }
 
         public OrderItem()
         {
         }
 
-        public OrderItem(int quantity, double price)
+        public OrderItem(int quantity, double price, Product product)
         {
             Quantity = quantity;
             Price = price;
+            Product = product;
         }
 
-        public double SubTotal(int quantity, double price)
+        public double SubTotal()
         {
-            return quantity * price;
+            return Quantity * Price;
+        }
+
+        public override string ToString()
+        {
+            return Product.Name
+                + ", $"
+                + Price.ToString("F2", CultureInfo.InvariantCulture)
+                + ", Quantity: "
+                + Quantity
+                + ", Subtotal: $"
+                + SubTotal().ToString("F2", CultureInfo.InvariantCulture);
         }
     }
 }

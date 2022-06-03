@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
-using ExProp.Entities;
+using System.Globalization;
+using System.Collections.Generic;
 using ExProp.Entities.Enums;
 
 
@@ -35,12 +35,12 @@ namespace ExProp.Entities
             Items.Remove(item);
         }
 
-        public double Total(int quantity, double price)
+        public double Total()
         {
-            double sum = 0;
-            foreach (OrderItem it in Items)
+            double sum = 0.0;
+            foreach (OrderItem item in Items)
             {
-                sum += it.SubTotal(quantity, price);
+                sum += item.SubTotal();
             }
             return sum;
         }
@@ -48,12 +48,15 @@ namespace ExProp.Entities
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Order moment: " + Moment.ToString("dd/MM/yyyy HH:mm:ss"));
+            sb.AppendLine("Order status: " + Status);
+            sb.AppendLine("Client: " + Client);
             sb.AppendLine("Order items:");
-            
-            foreach (OrderItem o in Items)
+            foreach (OrderItem item in Items)
             {
-                sb.AppendLine(o.Products);
+                sb.AppendLine(item.ToString());
             }
+            sb.AppendLine("Total price: $" + Total().ToString("F2", CultureInfo.InvariantCulture));
             return sb.ToString();
         }
     }
